@@ -19,10 +19,10 @@ int main() {
     Movie *moviesHd;
 
     // Get linked list input preference
-    cout << "Which linked list method should we use?\n";
-    cout << "\t[1] New nodes are added at the head of the linked list";
-    cout << "\t[2] New nodes are added at the tail of the linked list";
-    cout << "\tChoice: ";
+    cout << "Which linked list method should we use?";
+    cout << "\n\t[1] New nodes are added at the head of the linked list";
+    cout << "\n\t[2] New nodes are added at the tail of the linked list";
+    cout << "\n\tChoice: ";
     int choice;
     cin >> choice;
     if (choice < 1 || choice > 2){ // Input validation
@@ -34,23 +34,49 @@ int main() {
     bool stop = false;
     while (!stop){
         // Variables
-        Movie *tmp;
+        Movie *tmp = new Movie;
         char another;
 
         // Inputs
-        cout << "Enter review rating 0-5: ";
+        cout << "\nEnter review rating 0-5: ";
         cin >> tmp->rating;
         if (tmp->rating < 0 || tmp->rating > 5){ // Input validation
-            cout << "Invalid Input";
+            cout << "\nInvalid Input";
             return 0;
         }
-        cout << "Enter review comments: ";
+        cout << "\nEnter review comments: ";
         cin.ignore();
         getline(cin, tmp->comment);
 
-        cout << "Enter another review? Y/N: ";
+        cout << "\nEnter another review? Y/N: ";
         cin >> another;
+        if (another == 'N' || another == 'n')
+            stop = true;
+        else if (another != 'Y' && another != 'y'){
+            cout << "\nInvalid Input";
+            stop = true;
+        }
+
+        // Processing
+        if (choice == 1)
+            pushFront(&moviesHd, tmp);
+        else
+            pushBack(&moviesHd, tmp);
     }
+
+    // Output
+    cout << "\nOutputting all reviews:";
+    Movie *curr = moviesHd;
+    int i = 1;
+    float average = 0;
+    while (curr){ // loop through linked list
+        cout << "\n\t> Review #" << i << ": " << curr->rating << ": " << curr->comment;
+        average += curr->rating;
+        curr = curr->next;
+        i++;
+    }
+    average = average / i;
+    cout << "\n\t> Average: " << average;
 
     return 0;
 }
