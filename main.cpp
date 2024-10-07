@@ -16,7 +16,7 @@ void pushBack(Movie **head, Movie *node); // Adds node to back of list
 void deleteList(Movie **head); // Deletes entire list
 
 int main() {
-    Movie *moviesHd;
+    Movie *moviesHd = nullptr;
 
     // Get linked list input preference
     cout << "Which linked list method should we use?";
@@ -35,6 +35,7 @@ int main() {
     while (!stop){
         // Variables
         Movie *tmp = new Movie;
+        tmp->next = nullptr;
         char another;
 
         // Inputs
@@ -75,7 +76,7 @@ int main() {
         curr = curr->next;
         i++;
     }
-    average = average / i;
+    average = average / (i-1);
     cout << "\n\t> Average: " << average;
 
     return 0;
